@@ -31,9 +31,9 @@ var server = http.createServer(async (request, response) => {
 	} catch (err) {
 		requestedPath = path.join(staticFileFolder, "error.html")
 		code = 404
-		errorString = `Request file does not exist`
-		console.log(`   Clinet requested noexistent file`)
-		content = (await util.promisify(fs.readFile)(requestedPath)).toString().replace(/\$\$CODE\$/, code.toString()).replace(/\$\$MESSAGE\$/, errorString)
+		errorString = `Requested file does not exist`
+		console.log(`   Client requested noexistent file`)
+		content = (await util.promisify(fs.readFile)(requestedPath)).toString().replace(/\$\$CODE\$/g, code.toString()).replace(/\$\$MESSAGE\$/g, errorString)
 
 		response.writeHead(code, errorString, { "Content-Type": mime.getType(".html") })
 		response.end(content)

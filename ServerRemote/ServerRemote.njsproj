@@ -35,6 +35,9 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="server.ts" />
+    <Content Include="static\error.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="static\index.html">
       <SubType>Code</SubType>
     </Content>
