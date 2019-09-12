@@ -35,35 +35,25 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="server.ts" />
-    <Content Include="static\error.html">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="static\index.html">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="static\tsconfig.json">
-      <SubType>Code</SubType>
-    </Content>
+    <Content Include="client\error.html" />
+    <Content Include="client\index.html" />
+    <Content Include="client\tsconfig.json" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="static\lib\" />
+    <Folder Include="client\" />
+    <Folder Include="client\lib\" />
     <Folder Include="tls\" />
-    <Folder Include="static\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="client\lib\app.ts" />
+    <TypeScriptCompile Include="client\lib\browserUtils.ts" />
     <TypeScriptCompile Include="configInterface.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="messageTypes.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="static\lib\app.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="static\lib\browserUtils.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
   </ItemGroup>
