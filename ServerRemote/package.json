@@ -7,8 +7,8 @@
     "name": ""
   },
   "scripts": {
-    "build": "tsc --build",
-    "clean": "tsc --build --clean"
+    "build": "tsc --build && tsc --project \"./static\"",
+    "clean": "tsc --build --clean && tsc --project \"./static\" --clean"
   },
   "devDependencies": {
     "@types/node": "^8.0.14",

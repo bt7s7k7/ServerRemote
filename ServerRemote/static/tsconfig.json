@@ -1,12 +1,11 @@
 {
 	"compilerOptions": {
-		"module": "commonjs",
+		"module": "esnext",
 		"target": "es6",
 		"lib": [ "es6", "dom", "dom.iterable" ],
 		"sourceMap": true
 	},
 	"exclude": [
-		"node_modules",
-		"static"
+		"node_modules"
 	]
 }

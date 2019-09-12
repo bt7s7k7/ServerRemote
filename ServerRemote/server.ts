@@ -27,6 +27,11 @@ var server = http.createServer(async (request, response) => {
 	console.log(`   Received request from ${request.socket.address().address}, for ${path.relative(__dirname, requestedPath)}`)
 
 	try {
+
+		if (path.basename(path.dirname(requestedPath)) == "lib" && path.extname(requestedPath) == "") {
+			requestedPath += ".js"
+		}
+
 		var content: Buffer | string = (await util.promisify(fs.readFile)(requestedPath))
 	} catch (err) {
 		requestedPath = path.join(staticFileFolder, "error.html")

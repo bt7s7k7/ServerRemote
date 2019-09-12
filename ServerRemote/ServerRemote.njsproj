@@ -41,11 +41,15 @@
     <Content Include="static\index.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="static\tsconfig.json">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="static\lib\" />
     <Folder Include="tls\" />
     <Folder Include="static\" />
   </ItemGroup>
@@ -54,6 +58,12 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="messageTypes.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="static\lib\app.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="static\lib\browserUtils.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
   </ItemGroup>

@@ -31,6 +31,9 @@ var server = http.createServer((request, response) => __awaiter(void 0, void 0, 
     var errorString = "No error";
     console.log(`   Received request from ${request.socket.address().address}, for ${path.relative(__dirname, requestedPath)}`);
     try {
+        if (path.basename(path.dirname(requestedPath)) == "lib" && path.extname(requestedPath) == "") {
+            requestedPath += ".js";
+        }
         var content = (yield util.promisify(fs.readFile)(requestedPath));
     }
     catch (err) {
