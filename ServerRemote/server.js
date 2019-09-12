@@ -15,7 +15,7 @@ const util = require("util");
 const http = require("http");
 const url = require("url");
 const mime = require("mime");
-var staticFileFolder = path.join(__dirname, "static");
+var staticFileFolder = path.join(__dirname, "client");
 if (process.argv.length != 3) {
     throw new Error("Expected 1 argument");
 }
