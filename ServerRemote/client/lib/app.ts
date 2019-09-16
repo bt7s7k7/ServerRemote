@@ -99,8 +99,13 @@ window.addEventListener("load", () => {
 				sendMessage({ type: "update", lastTime: lastUpdate }).then((msg) => {
 					// Set the time for waiting for next interval
 					lastUpdate = Date.now();
+					var console = E.console as HTMLTextAreaElement
+					/** If the console is scrolled all the way down */
+					var bottom = console.scrollHeight - console.scrollTop - console.clientHeight == 0
 					// Add lines to console
-					(E.console as HTMLTextAreaElement).value += msg.lines
+					console.value += msg.lines
+					// If the console was scrolled all the way down we scroll it all the way down
+					if (bottom) console.scrollTo(0, console.scrollHeight)
 					// Set target activity
 					active = msg.active
 					// Update the action buttons based on configured actions, it happends every update incase someone else changed the actions
