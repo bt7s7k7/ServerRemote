@@ -48,7 +48,6 @@
   <ItemGroup>
     <Folder Include="client\" />
     <Folder Include="client\lib\" />
-    <Folder Include="tls\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="client\lib\app.ts" />
