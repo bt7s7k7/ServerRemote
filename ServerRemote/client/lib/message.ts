@@ -1,11 +1,12 @@
 /** Type of the request or response */
 type MessageType = "update"
-| "command"
-| "action"
-| "createAction"
-| "error"
-| "kill"
-| "start"
+	| "command"
+	| "action"
+	| "createAction"
+	| "error"
+	| "kill"
+	| "start"
+	| "ping"
 
 export interface IAction {
 	name: string

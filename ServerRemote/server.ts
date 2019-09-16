@@ -29,7 +29,7 @@ var server = http.createServer(async (request, response) => {
 	if (parsedUrl.pathname == "/query") {
 		var errorMsg = "Internal server error"
 		var msg: message.IRequestMessage;
-		var resC: message.IResponseMessage;
+		var resC: message.IResponseMessage = {type: "ping"};
 		requestedPath = ".json"
 
 		try {

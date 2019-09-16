@@ -1,4 +1,4 @@
-import { E, setUpdateCallback } from "./browserUtils"
+﻿import { E, setUpdateCallback } from "./browserUtils"
 import * as message from "message"
 import { resolve } from "url"
 
@@ -43,6 +43,17 @@ var lastUpdate = 0
 var active = false
 
 window.addEventListener("load", () => {
+	E.stateButton.addEventListener("click", () => {
+		if (connected)
+			if (active) {
+				sendMessage({type: "kill"})
+			} else {
+				sendMessage({type: "start"})
+			}
+		else {
+			sendMessage({type: "ping"}, true)
+		}
+	})
 	setUpdateCallback(() => {
 		E.console.style.flexBasis = E.console.style.width;
 		E.pendingShow.innerText = connected ? pendingMessages.toString() : "Not connected"
@@ -51,6 +62,8 @@ window.addEventListener("load", () => {
 				pendingMessages > 0 ? "lightblue" :
 					active ? "white" : "lightcoral"
 			) : "red";
+		E.stateButton.innerText = connected ? (active ? "■" : "▶") : "↺"
+
 		if (Date.now() - lastUpdate > 1000 && connected) {
 			if (pendingMessages == 0) {
 				sendMessage({ type: "update", lastTime: lastUpdate }).then((msg) => {
