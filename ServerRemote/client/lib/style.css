@@ -1,0 +1,31 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.monospace {
+	font-family: Courier New, Courier, monospace
+}
+
+.shadow {
+	box-shadow: grey 0px 0px 10px;
+}
+
+.flex-y {
+	display: flex;
+	flex-direction: column
+}
+
+.flex-x {
+	display: flex;
+	flex-direction: row
+}
+
+.flex-fill {
+	flex: 1 1;
+}
+
+.padding {
+	padding: 4px;
+}

@@ -7,8 +7,21 @@ export function reloadElements() {
 	})
 }
 
+var updateCallback = () => { }
+
+export function setUpdateCallback(callback: () => void) {
+	if (typeof callback != "function" || callback.length != 0) throw new TypeError("Update callback function must be ()=>void")
+	updateCallback = callback
+}
+
+export function updateFunction() {
+	updateCallback()
+	requestAnimationFrame(updateFunction);
+}
+
 window.addEventListener("load", () => {
 	reloadElements();
+	updateFunction()
 })
 
 
@@ -43,3 +56,4 @@ export function loadFile(acceptString = "image/*", multiple = false, input = doc
 
 	})
 }
+

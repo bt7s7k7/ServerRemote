@@ -2,11 +2,22 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
-    <title>ServerRemote</title>
-	<script src="lib/app.js" type="module"></script>
+	<meta charset="utf-8" />
+	<title>ServerRemote</title>
+	<script src="./lib/app.js" type="module"></script>
+	<link rel="stylesheet" href="./lib/style.css" />
 </head>
 <body>
-	<div id="test"></div>
+	<div style="height: 100vh; width: 100vw" class="flex-y">
+		<div class="padding flex-fill flex-x">
+			<textarea class="monospace" style="flex: 0 1; flex-basis: 500px; resize: horizontal; color: white; background-color: black; width: 500px" readonly id="console">Page loaded!</textarea>
+			<div class="flex-fill" style="margin-left: 10px">
+				Todo: add buttons for actions and action editor
+			</div>
+		</div>
+		<div style="flex: 0 0 20px" class="shadow padding">
+
+		</div>
+	</div>
 </body>
 </html>

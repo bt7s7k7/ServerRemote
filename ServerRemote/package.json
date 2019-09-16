@@ -6,10 +6,11 @@
   "author": {
     "name": ""
   },
-  "scripts": {
-    "build": "tsc --build && tsc --build client",
-    "clean": "tsc --build --clean && tsc --build client --clean"
-  },
+	"scripts": {
+		"build": "tsc --build && tsc --build client",
+		"clean": "tsc --build --clean && tsc --build client --clean",
+		"buildClient": "tsc --build client"
+	},
   "devDependencies": {
     "@types/node": "^8.0.14",
     "typescript": "^3.2.2"

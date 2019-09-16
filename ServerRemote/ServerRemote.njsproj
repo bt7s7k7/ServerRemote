@@ -37,6 +37,9 @@
     <None Include="server.ts" />
     <Content Include="client\error.html" />
     <Content Include="client\index.html" />
+    <Content Include="client\lib\style.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="client\tsconfig.json" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
