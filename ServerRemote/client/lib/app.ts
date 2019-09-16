@@ -68,8 +68,8 @@ window.addEventListener("load", () => {
 			if (pendingMessages == 0) {
 				sendMessage({ type: "update", lastTime: lastUpdate }).then((msg) => {
 					if (msg.type == "error") throw msg.err
-					lastUpdate = Date.now()
-					E.console.innerText += msg.lines
+					lastUpdate = Date.now();
+					(E.console as HTMLTextAreaElement).value += msg.lines
 					active = msg.active
 					updateActions(msg.actions)
 				})
