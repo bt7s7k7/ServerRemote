@@ -30,7 +30,7 @@ export interface IResponseMessage {
 export interface IRequestMessage {
 	type: MessageType
 	/** Timestamp of the prev request used for providing console, used in console type */
-	lastTime: number
+	lastTime?: number
 	/** Command to execute */
 	command?: string
 	/** Action to execute */

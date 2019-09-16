@@ -25,7 +25,6 @@ var server = http.createServer(async (request, response) => {
 	var requestedPath = path.join(staticFileFolder, parsedUrl.pathname)
 	var code = 200
 	var errorString = "No error"
-	console.log(`   Received request from ${request.socket.address().address}, for ${path.relative(__dirname, requestedPath)}`)
 
 	if (parsedUrl.pathname == "/query") {
 		var errorMsg = "Internal server error"
@@ -60,7 +59,8 @@ var server = http.createServer(async (request, response) => {
 				content = JSON.stringify(resC)
 			}
 		}
-	} else
+	} else {
+		console.log(`   Received request from ${request.socket.address().address}, for ${path.relative(__dirname, requestedPath)}`)
 		try {
 			if (path.basename(path.dirname(requestedPath)) == "lib" && path.extname(requestedPath) == "") {
 				requestedPath += ".js"
@@ -77,6 +77,7 @@ var server = http.createServer(async (request, response) => {
 			response.writeHead(code, errorString, { "Content-Type": mime.getType(".html") })
 			response.end(content)
 		}
+	}
 
 	response.writeHead(code, errorString, { "Content-Type": mime.getType(requestedPath) })
 	response.end(content)
