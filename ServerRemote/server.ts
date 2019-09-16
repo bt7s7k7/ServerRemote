@@ -71,7 +71,7 @@ var server = http.createServer(async (request, response) => {
 						type: "update",
 						active: target != null,
 						// Output lines of the target since the last time provided by request message, joined together
-						lines: lines.filter(v => v.time >= msg.lastTime).map(v => v.data).join("\n") + "\n"
+						lines: lines.filter(v => v.time > msg.lastTime).map(v => v.data).join("\n")
 					}
 				} else if (msg.type == "start") {
 					// If we don't have a target create one
@@ -88,7 +88,7 @@ var server = http.createServer(async (request, response) => {
 							console.log(data.toString())
 							lines.push({ time: Date.now(), data: data.toString() })
 						})
-						target.stdout.on("error", (data) => {
+						target.stderr.on("data", (data) => {
 							console.error(data.toString())
 							lines.push({ time: Date.now(), data: data.toString() })
 						})
@@ -107,6 +107,11 @@ var server = http.createServer(async (request, response) => {
 					if (target) {
 						target.kill()
 						target = null
+					}
+				} else if (msg.type == "command") {
+					// If we have a target send it the received command
+					if (target) {
+						target.stdin.write(msg.command + "\n")
 					}
 				}
 				errorMsg = null

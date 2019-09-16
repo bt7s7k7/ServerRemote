@@ -10,7 +10,10 @@
 <body>
 	<div style="height: 100vh; width: 100vw" class="flex-y">
 		<div class="padding flex-fill flex-x">
-			<textarea class="monospace" style="flex: 0 1; flex-basis: 500px; resize: horizontal; color: white; background-color: black; width: 500px" readonly id="console">Page loaded!</textarea>
+			<div style="flex: 1 1;" class="flex-y">
+				<textarea class="monospace flex-fill" style="resize: none; color: white; background-color: black" readonly id="console"></textarea>
+				<input id="stdin" />
+			</div>
 			<div class="flex-fill" style="margin-left: 10px">
 				Todo: add buttons for actions and action editor
 			</div>

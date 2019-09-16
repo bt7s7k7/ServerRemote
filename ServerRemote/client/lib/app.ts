@@ -51,24 +51,32 @@ var pendingMessages = 0
 var lastUpdate = 0
 /** Is server target active */
 var active = false
+/** If we should send the update message next frame */
+var updateNow = false
 
 window.addEventListener("load", () => {
 	// State button event handler -----------------------------------------------------------------+
 	E.stateButton.addEventListener("click", () => {
 		if (connected)
 			if (active) {
-				sendMessage({type: "kill"})
+				sendMessage({ type: "kill" })
 			} else {
-				sendMessage({type: "start"})
+				sendMessage({ type: "start" })
 			}
 		else {
-			sendMessage({type: "ping"}, true)
+			sendMessage({ type: "ping" }, true)
+		}
+	})
+	// Listen for enter at command prompt input below the console and send the commands to the server to be sent to the client
+	E.stdin.addEventListener("keypress", (event) => {
+		if (event.key == "Enter") {
+			var input: HTMLInputElement = event.target as HTMLInputElement
+			sendMessage({ type: "command", command: input.value }).then(() => updateNow = true)
+			input.value = ""
 		}
 	})
 	setUpdateCallback(() => {
 		// Update loop ----------------------------------------------------------------------------+
-		// Set flex width to the actual width to allow resizing using the resize gizmo on textareas
-		E.console.style.flexBasis = E.console.style.width;
 		// Pending message information, if disconnected show
 		E.pendingShow.innerText = connected ? pendingMessages.toString() : "Not connected"
 		// Set the color of the status bar to represent the state of the targer and server
@@ -80,7 +88,10 @@ window.addEventListener("load", () => {
 		// Set the text of the state button to represent the action that will be executed after press
 		E.stateButton.innerText = connected ? (active ? "■" : "▶") : "↺"
 
-		if (Date.now() - lastUpdate > 1000 && connected) {
+
+		if ((Date.now() - lastUpdate > 1000 && connected) || updateNow) {
+			// Reset update now to awoid an infinite loop
+			updateNow = false
 			// Message interval -------------------------------------------------------------------+
 			// Test if no messages pending to avoid sending multiple update messages in one period
 			if (pendingMessages == 0) {
