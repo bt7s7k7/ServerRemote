@@ -1,5 +1,6 @@
 ﻿import { E, setUpdateCallback } from "./browserUtils"
 import * as message from "message"
+import { IConfig } from "../../configInterface"
 import { resolve } from "url"
 
 /** Is connected to the server */
@@ -40,11 +41,16 @@ export function sendMessage(msg: message.IRequestMessage, push = false): Promise
 // Global for devtools
 window["sendMessage"] = sendMessage
 
-function updateActions(actions: message.IAction[]) {
-	// TODO: action update code
+function updateConfig() {
+	sendMessage({
+		type: "getConfig"
+	}).then((msg) => {
+		clientConfig = msg.config
+		lastConfigChange = Date.now()
+	})
 }
 // Global for devtools
-window["updateActions"] = updateActions
+window["updateConfig"] = updateConfig
 
 var pendingMessages = 0
 /** Time the last update message was responded to */
@@ -53,6 +59,10 @@ var lastUpdate = 0
 var active = false
 /** If we should send the update message next frame */
 var updateNow = false
+/** The last time we downloaded the config */
+var lastConfigChange = 0
+/** Our downloaded config*/
+var clientConfig: IConfig = null
 
 window.addEventListener("load", () => {
 	// State button event handler -----------------------------------------------------------------+
@@ -108,8 +118,10 @@ window.addEventListener("load", () => {
 					if (bottom) console.scrollTo(0, console.scrollHeight)
 					// Set target activity
 					active = msg.active
-					// Update the action buttons based on configured actions, it happends every update incase someone else changed the actions
-					updateActions(msg.actions)
+
+					if (msg.lastConfigChange > lastConfigChange) {
+						updateConfig()
+					}
 				})
 			}
 		}

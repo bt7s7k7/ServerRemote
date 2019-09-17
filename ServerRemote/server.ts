@@ -23,7 +23,36 @@ var lines: { time: number, data: string }[] = [];
 console.log(",, Loading config file")
 /** Path of confing file including filename */
 var configPath = process.argv[2]
-var config: IConfig = JSON.parse(fs.readFileSync(configPath).toString());
+var config: IConfig
+{
+	var content = fs.readFileSync(configPath).toString()
+	if (content.length == 0) content = "{}"
+	config = Object.assign({
+		target: "cmd.exe",
+		port: 0,
+		actions: []
+	} as IConfig, JSON.parse(content))
+	updateConfig()
+}
+/** The time the config was last changed */
+var configChangedTime: number;
+
+/**
+ * Changes the configChangeTime and saves the config to the file
+ * */
+function updateConfig() {
+	configChangedTime = Date.now()
+	console.log(",, Saving config...")
+	
+	fs.writeFile(configPath, JSON.stringify(config), (err) => {
+		if (err) {
+			console.error(err)
+		} else {
+			console.log(".. Saved config")
+		}
+	})
+}
+
 /**
  * Processes the path by resolving macros
  * @param toProcess The path to preprocess
@@ -71,7 +100,9 @@ var server = http.createServer(async (request, response) => {
 						type: "update",
 						active: target != null,
 						// Output lines of the target since the last time provided by request message, joined together
-						lines: lines.filter(v => v.time > msg.lastTime).map(v => v.data).join("\n")
+						lines: lines.filter(v => v.time > msg.lastTime).map(v => v.data).join("\n"),
+						// Provide the last config change time so the client can request the new config if outdated
+						lastConfigChange: configChangedTime
 					}
 				} else if (msg.type == "start") {
 					// If we don't have a target create one
@@ -113,8 +144,25 @@ var server = http.createServer(async (request, response) => {
 					if (target) {
 						target.stdin.write(msg.command + "\n")
 					}
+				} else if (msg.type == "getConfig") {
+					// Respond with the current config
+					resC = {
+						type: "getConfig",
+						config: config
+					}
+				} else if (msg.type == "setConfig") {
+					// Test if the config is contained within the message
+					if ("config" in msg) {
+						// Use the sent config
+						config = msg.config
+						// Save
+						updateConfig()
+					} else {
+						// Return the error
+						errorMsg = "Config missing in config change message"
+					}
 				}
-				errorMsg = null
+				if (errorMsg == "Internal server error") errorMsg = null
 			}
 		} finally {
 			// If there was an error report it to the client

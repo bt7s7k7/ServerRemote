@@ -1,12 +1,15 @@
+import { IConfig } from "../../configInterface"
+
 /** Type of the request or response */
 type MessageType = "update"
 	| "command"
 	| "action"
-	| "createAction"
 	| "error"
 	| "kill"
 	| "start"
 	| "ping"
+	| "getConfig"
+	| "setConfig"
 
 export interface IAction {
 	name: string
@@ -21,10 +24,12 @@ export interface IResponseMessage {
 	err?: string
 	/** Console lines that appeared between updates */
 	lines?: string
-	/** Actions created */
-	actions?: Array<IAction>
 	/** Is server target process active */
-	active?: boolean
+	active?: boolean,
+	/** The time the config was last changed */
+	lastConfigChange?: number
+	/** Current config */
+	config?: IConfig
 }
 
 /** Reqest sent to the server */
@@ -34,8 +39,6 @@ export interface IRequestMessage {
 	lastTime?: number
 	/** Command to execute */
 	command?: string
-	/** Action to execute */
-	action?: string
-	/** Action creation data */
-	createAction?: IAction
+	/** New config to set */
+	config?: IConfig
 }
