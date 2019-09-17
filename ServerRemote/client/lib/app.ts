@@ -1,7 +1,6 @@
 ﻿import { E, setUpdateCallback } from "./browserUtils"
 import * as message from "message"
 import { IConfig } from "../../configInterface"
-import { resolve } from "url"
 
 /** Is connected to the server */
 var connected = true
