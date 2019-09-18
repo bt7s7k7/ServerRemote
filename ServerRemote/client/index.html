@@ -14,13 +14,43 @@
 				<textarea class="monospace flex-fill" style="resize: none; color: white; background-color: black" readonly id="console"></textarea>
 				<input id="stdin" class="monospace" style="color: white; background-color: black; border-top: none" />
 			</div>
-			<div style="margin-left: 10px; flex: 0 1 200px">
-				Todo: add buttons for actions and action editor
+			<div style="margin-left: 10px; flex: 0 1 200px" id="actions">
+				
 			</div>
 		</div>
 		<div style="flex: 0 0 20px" class="shadow padding" id="statusbar">
 			<button id="stateButton">▶</button>
+			<button id="settingsButton">◱</button>
 			Pending messages: <span style="width: 100px" id="pendingShow">...</span>
+		</div>
+	</div>
+
+	<div style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.75); display: none; padding: 20px; box-sizing: border-box" class="flex-x" id="settingsWindow">
+		<div style="background-color: white; width: 100%" class="flex-y">
+			<div class="flex-fill padding" style="overflow: auto; display: none" id="settingsTop">
+				Target: <input id="settingsTargetField" /><br />
+				Port: <input type="number" id="settingsPortField" /><br />
+				The port change will be applied after restart. Use port 0 for default value.<br />
+				<button id="settingsEdit">Edit actions</button><br />
+			</div>
+			<div class="flex-fill padding" style="overflow: auto; display: none" id="settingsActions">
+				<button id="settingsBackA">Back</button>
+				<button id="settingsNewAction">New action</button><br /><br />
+				<div id="settingsActionList">
+
+				</div>
+			</div>
+			<div class="flex-fill padding" style="overflow-y: auto; display: none" id="settingsActionEditor">
+				<button id="settingsBackE">Back</button>
+				<button id="settingsDelete">Delete action</button><br />
+				Name: <input id="settingsNameField" /><br />
+				Actions prefixed with an underscore will be hidden, name an action "_start" and it will be execute on target start.<br />
+				Commands:<br />
+				<textarea id="settingsCommandsField" style="resize: vertical; width: calc(100% - 6px); height: 500px"></textarea><br />
+			</div>
+			<div style="flex: 0 0 20px" class="padding">
+				<button id="saveAndExit">Save and exit</button>
+			</div>
 		</div>
 	</div>
 </body>

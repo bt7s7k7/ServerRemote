@@ -1,5 +1,6 @@
 ﻿import { E, setUpdateCallback } from "./browserUtils"
 import { sendMessage, state, controllUpdate, updateNow } from "./controll"
+import * as settings from "./settings"
 
 window.addEventListener("load", () => {
 	// State button event handler -----------------------------------------------------------------+
@@ -22,6 +23,9 @@ window.addEventListener("load", () => {
 			input.value = ""
 		}
 	})
+
+	settings.setup()
+
 	setUpdateCallback(() => {
 		// Update loop ----------------------------------------------------------------------------+
 		// Pending message information, if disconnected show

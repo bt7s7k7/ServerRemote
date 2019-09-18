@@ -38,7 +38,7 @@ export function sendMessage(msg: message.IRequestMessage, push = false): Promise
 // Global for devtools
 window["sendMessage"] = sendMessage
 
-function updateConfig() {
+export function updateConfig() {
 	sendMessage({
 		type: "getConfig"
 	}).then((msg) => {
@@ -46,6 +46,11 @@ function updateConfig() {
 		lastConfigChange = Date.now()
 	})
 }
+
+export function uploadConfig() {
+	return sendMessage({ type: "setConfig", config: state.clientConfig })
+}
+
 // Global for devtools
 window["updateConfig"] = updateConfig
 
@@ -56,7 +61,8 @@ export var state = {
 	/** Is connected to the server */
 	connected: true,
 	/** Our downloaded config*/
-	clientConfig: <IConfig> null
+	clientConfig: <IConfig>null,
+	isClientConfigOccupied: false
 }
 /** Time the last update message was responded to */
 var lastUpdate = 0
@@ -81,7 +87,7 @@ export function controllUpdate(): Promise<string> {
 					resolve(msg.lines)
 					state.active = msg.active
 
-					if (msg.lastConfigChange > lastConfigChange) {
+					if (msg.lastConfigChange > lastConfigChange && !state.isClientConfigOccupied) {
 						updateConfig()
 					}
 				})

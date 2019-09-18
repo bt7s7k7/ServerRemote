@@ -1,4 +1,1 @@
-{
-	"port": 8000,
-	"target": "cmd.exe"
-}
+{"target":"cmd.exe","port":8000,"actions":[{"name":"test","command":"echo test"},{"name":"_hiddenTest","command":"echo hidden test"},{"name":"_start","command":"echo started"}]}

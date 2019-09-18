@@ -56,6 +56,9 @@
     <TypeScriptCompile Include="client\lib\message.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="client\lib\settings.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="configInterface.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

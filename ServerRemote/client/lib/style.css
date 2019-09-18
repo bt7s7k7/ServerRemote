@@ -28,4 +28,5 @@ body {
 
 .padding {
 	padding: 4px;
+	box-sizing: border-box;
 }
