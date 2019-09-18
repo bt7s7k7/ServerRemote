@@ -1,10 +1,10 @@
 {
   "name": "server-remote",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "ServerRemote",
   "main": "server.js",
   "author": {
-    "name": ""
+    "name": "bt7s7k7"
   },
 	"scripts": {
 		"build": "tsc --build && tsc --build client",
