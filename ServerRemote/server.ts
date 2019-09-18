@@ -43,7 +43,7 @@ var configChangedTime: number;
 function updateConfig() {
 	configChangedTime = Date.now()
 	console.log(",, Saving config...")
-	
+
 	fs.writeFile(configPath, JSON.stringify(config), (err) => {
 		if (err) {
 			console.error(err)
@@ -59,6 +59,23 @@ function updateConfig() {
  */
 function preprocessPath(toProcess: string) {
 	return toProcess.replace(/__DIR/g, path.resolve(path.dirname(configPath)))
+}
+/**
+ * Runs the action with the action name, if no target or action not extist returns
+ * @param actionName
+ */
+function runAction(actionName: string) {
+	if (target == null) return
+	let action = config.actions.filter(v => v.name == actionName)[0]
+
+	if (action) {
+		for (let line of preprocessPath(action.command).split("\n")) {
+			// Octothorp on the beggining of the line means it's a comment
+			if (line[0] == "#") continue
+			target.stdin.write(line + "\n")
+
+		}
+	}
 }
 
 console.log(",, Starting...")
@@ -132,6 +149,11 @@ var server = http.createServer(async (request, response) => {
 							console.error(err)
 							target = null
 						})
+
+						// Run the start action if exists
+						runAction("_start")
+
+						lines.push({ time: Date.now(), data: "\n\n-- New instance started --\n\n" })
 					}
 				} else if (msg.type == "kill") {
 					// If we have a target we kill it
@@ -161,6 +183,8 @@ var server = http.createServer(async (request, response) => {
 						// Return the error
 						errorMsg = "Config missing in config change message"
 					}
+				} else if (msg.type == "action") {
+					runAction(msg.command)
 				}
 				if (errorMsg == "Internal server error") errorMsg = null
 			}

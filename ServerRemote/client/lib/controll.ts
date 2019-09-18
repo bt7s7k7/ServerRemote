@@ -39,7 +39,7 @@ export function sendMessage(msg: message.IRequestMessage, push = false): Promise
 window["sendMessage"] = sendMessage
 
 export function updateConfig() {
-	sendMessage({
+	return sendMessage({
 		type: "getConfig"
 	}).then((msg) => {
 		state.clientConfig = msg.config
@@ -71,7 +71,7 @@ var _updateNow = false
 /** The last time we downloaded the config */
 var lastConfigChange = 0
 
-export function controllUpdate(): Promise<string> {
+export function controllUpdate(onConfigChange = () => {}): Promise<string> {
 	return new Promise((resolve, reject) => {
 		if ((Date.now() - lastUpdate > 1000 && state.connected) || _updateNow) {
 			// Reset update now to awoid an infinite loop
@@ -88,7 +88,7 @@ export function controllUpdate(): Promise<string> {
 					state.active = msg.active
 
 					if (msg.lastConfigChange > lastConfigChange && !state.isClientConfigOccupied) {
-						updateConfig()
+						updateConfig().then(onConfigChange)
 					}
 				})
 			}

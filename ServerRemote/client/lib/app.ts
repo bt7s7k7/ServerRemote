@@ -40,7 +40,27 @@ window.addEventListener("load", () => {
 		E.stateButton.innerText = state.connected ? (state.active ? "■" : "▶") : "↺"
 
 
-		controllUpdate().then((lines) => {
+		controllUpdate(() => {
+			// On config change we update the action buttons
+			// First we delete the old ones
+			while (E.actions.childElementCount > 0) {
+				E.actions.removeChild(E.actions.firstElementChild)
+			}
+			// Then create the new ones
+			for (let i of state.clientConfig.actions) {
+				// If the actions name begins with an undescore, the it's hidden, so skip it
+				if (i.name[0] == "_") continue
+				let action = i
+				let button = document.createElement("button")
+				button.innerText = action.name
+				button.addEventListener("click", () => {
+					sendMessage({type: "action", command: action.name})
+				})
+
+				E.actions.appendChild(button)
+				E.actions.appendChild(document.createElement("br"))
+			}
+		}).then((lines) => {
 			var console = E.console as HTMLTextAreaElement
 			/** If the console is scrolled all the way down */
 			var bottom = console.scrollHeight - console.scrollTop - console.clientHeight == 0

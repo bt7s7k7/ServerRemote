@@ -1,1 +1,1 @@
-{"target":"cmd.exe","port":8000,"actions":[{"name":"test","command":"echo test"},{"name":"_hiddenTest","command":"echo hidden test"},{"name":"_start","command":"echo started"}]}
+{"target":"cmd.exe","port":8000,"actions":[{"name":"_start","command":"echo started"},{"name":"exit","command":"exit"},{"name":"test","command":"echo testing\n# this is a comment\necho directory of the config: __DIR"}]}
