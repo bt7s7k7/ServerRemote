@@ -42,7 +42,7 @@ function updateConfig() {
 	sendMessage({
 		type: "getConfig"
 	}).then((msg) => {
-		clientConfig = msg.config
+		state.clientConfig = msg.config
 		lastConfigChange = Date.now()
 	})
 }
@@ -54,7 +54,9 @@ export var state = {
 	/** Is server target active */
 	active: false,
 	/** Is connected to the server */
-	connected: true
+	connected: true,
+	/** Our downloaded config*/
+	clientConfig: <IConfig> null
 }
 /** Time the last update message was responded to */
 var lastUpdate = 0
@@ -62,10 +64,6 @@ var lastUpdate = 0
 var _updateNow = false
 /** The last time we downloaded the config */
 var lastConfigChange = 0
-/** Our downloaded config*/
-var clientConfig: IConfig = null
-
-export var target: EventTarget = new EventTarget();
 
 export function controllUpdate(): Promise<string> {
 	return new Promise((resolve, reject) => {
