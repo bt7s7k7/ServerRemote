@@ -52,6 +52,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="client\lib\app.ts" />
     <TypeScriptCompile Include="client\lib\browserUtils.ts" />
+    <TypeScriptCompile Include="client\lib\controll.ts" />
     <TypeScriptCompile Include="client\lib\message.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
