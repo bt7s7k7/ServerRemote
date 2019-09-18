@@ -29,7 +29,7 @@ var config: IConfig
 	if (content.length == 0) content = "{}"
 	config = Object.assign({
 		target: "cmd.exe",
-		port: 0,
+		port: 8000,
 		actions: []
 	} as IConfig, JSON.parse(content))
 	updateConfig()
