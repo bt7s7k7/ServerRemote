@@ -1,0 +1,6 @@
+rignore.txt\
+obj
+bin
+ServerRemote.njsproj
+node_modules
+package-lock.json\

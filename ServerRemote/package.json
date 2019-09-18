@@ -9,7 +9,8 @@
 	"scripts": {
 		"build": "tsc --build && tsc --build client",
 		"clean": "tsc --build --clean && tsc --build client --clean",
-		"buildClient": "tsc --build client"
+		"buildClient": "tsc --build client",
+		"release": "npm run build && xcopy \"*\" \"../Release/\" /i /s /y /f /exclude:rignore.txt && npm update --prefix ../Release "
 	},
   "devDependencies": {
     "@types/node": "^8.0.14",
